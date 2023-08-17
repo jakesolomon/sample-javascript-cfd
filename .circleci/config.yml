@@ -30,7 +30,12 @@ jobs:
       - persist_to_workspace:
           root: ~/project
           paths: .
-  deploy: # this can be any name you choose
+  deploy_to_dev: # this can be any name you choose
+    executor: node/default
+    steps:
+      - run:
+          command: echo 'deploying...'
+  deploy_to_qa: # this can be any name you choose
     executor: node/default
     steps:
       - run:
@@ -44,4 +49,9 @@ workflows:
   sample-workflow:
     jobs:
       - build_and_test
-      - deploy
+      - deploy_to_dev
+      - deploy_to_qa: # <<< A job that will require manual approval in the CircleCI web application.
+          type: approval # <<< This key-value pair will set your workflow to a status of "On Hold"
+          requires: 
+              - request-approval
+
