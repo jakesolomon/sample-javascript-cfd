@@ -45,7 +45,3 @@ workflows:
     jobs:
       - build_and_test
       - deploy
-
-  say-hello-workflow:
-    jobs:
-      - say-hello
